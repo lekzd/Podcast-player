@@ -1,0 +1,1 @@
+export const PODCAST_ENDPOINT = '/rest/podcasts';

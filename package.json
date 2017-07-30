@@ -21,12 +21,21 @@
     "redux-logger": "^3.0.6"
   },
   "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "axios": "^0.16.2",
+    "json-server": "^0.11.2",
     "react-scripts-ts": "2.5.0"
   },
+  "proxy": {
+    "/rest": {
+      "target": "http://localhost:3001"
+    }
+  } ,
   "scripts": {
     "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
-    "eject": "react-scripts-ts eject"
+    "eject": "react-scripts-ts eject",
+    "fake-backend": "json-server fake-backend/db.json --port 3001 --routes fake-backend/routes.json"
   }
 }

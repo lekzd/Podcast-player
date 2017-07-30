@@ -1,4 +1,4 @@
-import { Series, Author } from './';
+import { Series, Author } from '.';
 
 export class Podcast {
     constructor(

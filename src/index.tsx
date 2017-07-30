@@ -5,8 +5,8 @@ import { Provider } from 'react-redux';
 
 import store from './store';
 
-import App from './components/App/App';
-import Player from './components/Player/Player';
+import PodcastList from './components/podcasts/podcast-list';
+import Player from './components/player/player';
 
 import '../node_modules/plyr/dist/plyr.css';
 
@@ -16,7 +16,7 @@ ReactDOM.render(
   <Provider store={store}>
     <Router>
       <div>
-        <Route path="/" exact={true} component={App} />
+        <Route path="/" exact={true} component={PodcastList} />
         <Player />
       </div>
     </Router>
