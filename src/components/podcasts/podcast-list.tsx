@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Podcast, State } from '../../models';
 import { PODCASTLIST_LOADED, API_ERROR } from '../../constants/action-types';
 import { podcastAPI } from '../../api';
+import podcastComponent from './podcast';
 
 interface Props {
   onLoad: (podcastList: Podcast[]) => void;
@@ -36,12 +37,6 @@ class PodcastList extends React.Component<Props, {}> {
     }
   }
 
-  podcastTitles() {
-    return this.props.podcastList.map(
-      podcast => <div key={podcast.id}>{podcast.title}</div>
-    );
-  }
-
   render() {
     if (!this.props.podcastList) {
       return (
@@ -52,7 +47,7 @@ class PodcastList extends React.Component<Props, {}> {
     }
     return (
       <div>
-        {this.podcastTitles()}
+        {this.props.podcastList.map(podcast => podcastComponent(podcast))}
       </div>
     );
   }
