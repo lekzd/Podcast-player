@@ -1,4 +1,4 @@
-import { Podcast, Author, Series } from '.';
+import { Podcast, Author, Series, APIError } from '.';
 
 export interface State {
     podcastList?: Podcast[];
@@ -9,4 +9,5 @@ export interface State {
     currentSeries?: Series;
     seachTerm?: String;
     page?: Number;
+    error?: APIError;
 }

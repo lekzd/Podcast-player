@@ -47,7 +47,8 @@ class PodcastList extends React.Component<Props, {}> {
       return (
         <div>
           Loading
-        </div>);
+        </div>
+      );
     }
     return (
       <div>

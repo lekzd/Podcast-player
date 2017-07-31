@@ -10,4 +10,5 @@ export interface Action {
     currentAuthor?: Author;
     page?: number;
     searchTerm?: String;
+    error?: String;
 }
