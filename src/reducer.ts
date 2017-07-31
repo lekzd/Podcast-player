@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import postcastList from './reducers/podcast-list';
+import podcastList from './reducers/podcast-list';
 
 export default combineReducers({
-    postcastList
+    podcastList
 });

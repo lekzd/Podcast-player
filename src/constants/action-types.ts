@@ -1,1 +1,2 @@
 export const PODCASTLIST_LOADED = 'PODCASTLIST_LOADED';
+export const API_ERROR = 'API_ERROR';

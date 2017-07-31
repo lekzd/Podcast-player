@@ -1,14 +1,13 @@
-import { Action, State } from '../models';
-// import { PODCASTLIST_LOADED } from '../constants/action-types';
+import { Action, Podcast } from '../models';
+import { PODCASTLIST_LOADED } from '../constants/action-types';
 
-export default (state: State = new State(), action: Action = {type: ''}): State => {
+const podcastListReducer = (state: Podcast[] = [], action: Action = { type: '' }): Podcast[] => {
     switch (action.type) {
-        // case PODCASTLIST_LOADED:
-        //     return {
-        //         ...state,
-        //         podcastList: action.podcastList || []
-        //     };
+        case PODCASTLIST_LOADED:
+            return (action.podcastList || []).slice(0);
         default:
             return state;
     }
 };
+
+export default podcastListReducer;

@@ -1,47 +1,57 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Podcast, State } from '../../models';
-import { PODCASTLIST_LOADED } from '../../constants/action-types';
-import podcastAPI from './podcast-api';
+import { PODCASTLIST_LOADED, API_ERROR } from '../../constants/action-types';
+import { podcastAPI } from '../../api';
 
 interface Props {
   onLoad: (podcastList: Podcast[]) => void;
+  onError: (errorMessage: String) => void;
+  buttonClick: () => void;
   podcastList: Podcast[];
 }
 
-const mapDispatchToProps = (dispatch: Function) => ({
-  onLoad: (podcastList: Podcast[]) => {
-    dispatch({ type: PODCASTLIST_LOADED, podcastList });
-  }
-});
+const mapDispatchToProps = (dispatch: Function) => {
+  return {
+    onLoad: (podcastList: Podcast[]) => dispatch({ type: PODCASTLIST_LOADED, podcastList }),
+    onError: (errorMessage: String) => dispatch({ type: API_ERROR, errorMessage })
+  };
+};
 
-const mapStateToProps = (state: State) => ({
-    podcastList: state.podcastList
-});
+const mapStateToProps = (state: State) => {
+  return {
+    podcastList: state.podcastList || []
+  };
+};
 
 class PodcastList extends React.Component<Props, {}> {
 
   async componentDidMount() {
-    let podcastList = [];
+    let list;
     try {
-      podcastList = await podcastAPI.getList();
-      this.props.onLoad(podcastList);
-    } catch (e) { /* todo */ }
+      list = await podcastAPI.getList();
+      this.props.onLoad(list);
+    } catch (e) {
+      this.props.onError('Unable to load podcasts');
+    }
   }
 
-  getTitles() {
-    return this.props.podcastList.map(item => <div>item.title</div>);
+  podcastTitles() {
+    return this.props.podcastList.map(
+      podcast => <div key={podcast.id}>{podcast.title}</div>
+    );
   }
 
   render() {
-    console.log('render');
     if (!this.props.podcastList) {
-      return <div>Loading</div>;
+      return (
+        <div>
+          Loading
+        </div>);
     }
     return (
-
       <div>
-        {this.getTitles()}
+        {this.podcastTitles()}
       </div>
     );
   }

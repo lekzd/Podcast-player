@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { Podcast } from '../../models';
-import { PODCAST_ENDPOINT } from '../../constants/endpoints';
-import fromJson from '../../factories/from-json';
+import { Podcast } from '../models';
+import { PODCAST_ENDPOINT } from '../constants/endpoints';
+import fromJson from '../factories/from-json';
 
 class PodcastAPI {
 
@@ -12,4 +12,4 @@ class PodcastAPI {
 
 }
 
-export default new PodcastAPI();
+export const podcastAPI = new PodcastAPI();
