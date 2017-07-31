@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { Podcast, State } from '../../models';
 import { PODCASTLIST_LOADED, API_ERROR } from '../../constants/action-types';
 import { podcastAPI } from '../../api';
-import podcastComponent from './podcast';
+import PodcastComponent from './podcast';
+import PodcastSearch from './podcast-search';
 
 interface Props {
   onLoad: (podcastList: Podcast[]) => void;
@@ -25,7 +26,7 @@ const mapStateToProps = (state: State) => {
   };
 };
 
-class PodcastList extends React.Component<Props, {}> {
+class PodcastContainer extends React.Component<Props, {}> {
 
   async componentDidMount() {
     let list;
@@ -47,11 +48,12 @@ class PodcastList extends React.Component<Props, {}> {
     }
     return (
       <div>
-        {this.props.podcastList.map(podcast => podcastComponent(podcast))}
+        <PodcastSearch />
+        {this.props.podcastList.map(podcast => PodcastComponent(podcast))}
       </div>
     );
   }
 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PodcastList);
+export default connect(mapStateToProps, mapDispatchToProps)(PodcastContainer);
