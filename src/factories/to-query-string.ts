@@ -7,5 +7,5 @@ export const toQueryString = (params: {[key: string]: string|number|boolean|unde
                 return sum;
             },
             '?'
-        );
+        ).replace(/\&$/, '');
 };

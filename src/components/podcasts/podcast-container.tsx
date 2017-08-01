@@ -7,7 +7,7 @@ import PodcastComponent from './podcast';
 import PodcastSearch from './podcast-search';
 
 interface Props {
-  onLoad: (podcastList: Podcast[]) => void;
+  updateList: (podcastList: Podcast[]) => void;
   onError: (errorMessage: String) => void;
   buttonClick: () => void;
   podcastList: Podcast[];
@@ -15,7 +15,7 @@ interface Props {
 
 const mapDispatchToProps = (dispatch: Function) => {
   return {
-    onLoad: (podcastList: Podcast[]) => dispatch({ type: PODCASTLIST_LOADED, podcastList }),
+    updateList: (podcastList: Podcast[]) => dispatch({ type: PODCASTLIST_LOADED, podcastList }),
     onError: (errorMessage: String) => dispatch({ type: API_ERROR, errorMessage })
   };
 };
@@ -30,11 +30,27 @@ class PodcastContainer extends React.Component<Props, {}> {
 
   private amountPerPage: number = 10;
 
+  constructor() {
+    super();
+    this.componentDidMount = this.componentDidMount.bind(this);
+    this.searchForPodcasts = this.searchForPodcasts.bind(this);
+  }
+
   async componentDidMount() {
     let list;
     try {
       list = await podcastAPI.getList({ _start: 0, _end: this.amountPerPage });
-      this.props.onLoad(list);
+      this.props.updateList(list);
+    } catch (e) {
+      this.props.onError('Unable to load podcasts');
+    }
+  }
+
+  async searchForPodcasts(searchTerm: string) {
+    let list;
+    try {
+      list = await podcastAPI.getList({ _start: 0, _end: this.amountPerPage, q: searchTerm });
+      this.props.updateList(list);
     } catch (e) {
       this.props.onError('Unable to load podcasts');
     }
@@ -50,7 +66,7 @@ class PodcastContainer extends React.Component<Props, {}> {
     }
     return (
       <div>
-        <PodcastSearch />
+        <PodcastSearch onSearch={this.searchForPodcasts} />
         {this.props.podcastList.map(podcast => PodcastComponent(podcast))}
       </div>
     );
