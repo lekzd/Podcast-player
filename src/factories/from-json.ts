@@ -38,4 +38,4 @@ class FromJson {
 
 }
 
-export default new FromJson();
+export const fromJson = new FromJson();

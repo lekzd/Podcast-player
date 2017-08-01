@@ -28,10 +28,12 @@ const mapStateToProps = (state: State) => {
 
 class PodcastContainer extends React.Component<Props, {}> {
 
+  private amountPerPage: number = 10;
+
   async componentDidMount() {
     let list;
     try {
-      list = await podcastAPI.getList();
+      list = await podcastAPI.getList({ _start: 0, _end: this.amountPerPage });
       this.props.onLoad(list);
     } catch (e) {
       this.props.onError('Unable to load podcasts');
