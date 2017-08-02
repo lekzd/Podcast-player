@@ -11,4 +11,5 @@ export interface Action {
     page?: number;
     searchTerm?: String;
     error?: String;
+    podcast?: Podcast;
 }

@@ -1,8 +1,9 @@
 import { combineReducers } from 'redux';
 import { State } from './models';
-import { podcastList, error } from './reducers';
+import { playingPodcast, podcastList, error } from './reducers';
 
 export default combineReducers<State>({
+    playingPodcast,
     podcastList,
     error
 });
