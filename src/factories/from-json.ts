@@ -21,7 +21,7 @@ class FromJson {
     }
 
     public series(data: any): Series {
-        return new Series(data.id, data.title, data.description, new Date(data.date));
+        return new Series(data.id, data.title, data.description, new Date(data.date), this.podcastList(data.podcasts));
     }
 
     public seriesList(data: any[]): Series[] {
@@ -29,7 +29,7 @@ class FromJson {
     }
 
     public author(data: any): Author {
-        return new Author(data.id, data.name, data.description, new Date(data.date));
+        return new Author(data.id, data.name, data.description, new Date(data.date), this.podcastList(data.podcasts));
     }
 
     public authorList(data: any[]): Author[] {

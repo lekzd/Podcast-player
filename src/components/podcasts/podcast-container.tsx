@@ -73,7 +73,7 @@ class PodcastContainer extends React.Component<Props, {}> {
   }
 
   render() {
-    if (!this.props.podcastList) {
+    if (!this.props.podcastList.length) {
       return (
         <div>
           Loading

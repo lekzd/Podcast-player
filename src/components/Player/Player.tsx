@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as plyr from 'plyr';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { State, PlayingPodcast } from '../../models';
 import { RESUME_PODCAST, PAUSE_PODCAST } from '../../constants/action-types';
 
@@ -65,6 +66,7 @@ class Player extends React.Component<Props, {}> {
     return (
       <div>
         <strong>{podcast.title}</strong>
+        <Link to={'/author/' + podcast.author.id}>{podcast.author.name}</Link>
       </div>
     );
   }

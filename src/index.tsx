@@ -7,6 +7,8 @@ import store from './store';
 
 import PodcastContainer from './components/podcasts/podcast-container';
 import SeriesContainer from './components/series/series-container';
+import AuthorsContainer from './components/author/author-container';
+import AuthorPage from './components/author/author-page';
 import Player from './components/player/player';
 
 import '../node_modules/plyr/dist/plyr.css';
@@ -19,6 +21,8 @@ ReactDOM.render(
       <div>
         <Route path="/" exact={true} component={PodcastContainer} />
         <Route path="/series" component={SeriesContainer} />
+        <Route path="/authors" component={AuthorsContainer}/>
+        <Route path="/authors/:authorId" component={AuthorPage}/>
         <Player />
       </div>
     </Router>
