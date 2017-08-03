@@ -16,7 +16,7 @@ class FromJson {
         );
     }
 
-    public podcastList(data: any[]): Podcast[] {
+    public podcastList(data: any[] = []): Podcast[] {
         return data.map(item => this.podcast(item));
     }
 
@@ -24,7 +24,7 @@ class FromJson {
         return new Series(data.id, data.title, data.description, new Date(data.date), this.podcastList(data.podcasts));
     }
 
-    public seriesList(data: any[]): Series[] {
+    public seriesList(data: any[] = []): Series[] {
         return data.map(item => this.series(item));
     }
 
@@ -32,7 +32,7 @@ class FromJson {
         return new Author(data.id, data.name, data.description, new Date(data.date), this.podcastList(data.podcasts));
     }
 
-    public authorList(data: any[]): Author[] {
+    public authorList(data: any[] = []): Author[] {
         return data.map(item => this.author(item));
     }
 

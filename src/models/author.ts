@@ -5,6 +5,6 @@ export class Author {
         public name: string,
         public description: string,
         public created: Date,
-        public podcasts: Podcast[]
+        public podcasts: Podcast[] = []
     ) { }
 }

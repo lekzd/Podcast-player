@@ -6,21 +6,24 @@ import { authorAPI } from '../../api';
 import PodcastComponent from '../podcasts/podcast';
 
 interface Props {
+  route: {
     authorId: number;
-    author: Author;
-    setCurrentAuthor: (author: Author) => void;
-    playPodcast: (podcast: Podcast) => void;
-    onError: (errorMessage: String) => void;
+  };
+  author: Author;
+  setCurrentAuthor: (currentAuthor: Author) => void;
+  playPodcast: (podcast: Podcast) => void;
+  onError: (errorMessage: String) => void;
 }
 
-const mapStateToProps = (state: State) => ({
+const mapStateToProps = (state: State, previousProps: Props) => ({
+  ...previousProps,
   author: state.currentAuthor
 });
 
 const mapDispatchToProps = (dispatch: Function) => ({
-    setCurrentAuthor: (author: Author) => dispatch({type: CURRENT_AUTHOR_LOADED, author }),
-    playPodcast: (podcast: Podcast) => dispatch({type: PLAY_PODCAST, podcast}),
-    onError: (errorMessage: String) => dispatch({type: API_ERROR})
+  setCurrentAuthor: (currentAuthor: Author) => dispatch({ type: CURRENT_AUTHOR_LOADED, currentAuthor }),
+  playPodcast: (podcast: Podcast) => dispatch({ type: PLAY_PODCAST, podcast }),
+  onError: (errorMessage: String) => dispatch({ type: API_ERROR })
 });
 
 class AuthorPage extends React.Component<Props, {}> {
@@ -35,9 +38,10 @@ class AuthorPage extends React.Component<Props, {}> {
   async componentDidMount() {
     let author;
     try {
-      author = await authorAPI.read(this.props.authorId);
+      author = await authorAPI.read(1); // TODO get from props
       this.props.setCurrentAuthor(author);
     } catch (e) {
+      console.debug(e);
       this.props.onError('Unable to load podcasts');
     }
   }

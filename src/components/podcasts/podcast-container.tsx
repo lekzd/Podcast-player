@@ -16,14 +16,14 @@ interface Props {
 }
 
 const mapStateToProps = (state: State) => ({
-    podcastList: state.podcastList || []
+  podcastList: state.podcastList || []
 });
 
 const mapDispatchToProps = (dispatch: Function) => ({
-    updateList: (podcastList: Podcast[]) => dispatch({ type: PODCASTLIST_LOADED, podcastList }),
-    onError: (errorMessage: String) => dispatch({ type: API_ERROR, errorMessage }),
-    playPodcast: (podcast: Podcast) => dispatch({type: PLAY_PODCAST, podcast }),
-    queuePodcastToPlay: (podcast: Podcast) => dispatch({type: QUEUE_PODCAST, podcast})
+  updateList: (podcastList: Podcast[]) => dispatch({ type: PODCASTLIST_LOADED, podcastList }),
+  onError: (errorMessage: String) => dispatch({ type: API_ERROR, errorMessage }),
+  playPodcast: (podcast: Podcast) => dispatch({ type: PLAY_PODCAST, podcast }),
+  queuePodcastToPlay: (podcast: Podcast) => dispatch({ type: QUEUE_PODCAST, podcast })
 });
 
 class PodcastContainer extends React.Component<Props, {}> {
@@ -46,7 +46,6 @@ class PodcastContainer extends React.Component<Props, {}> {
       if (list.length > 0) {
         this.props.queuePodcastToPlay(list[0]);
       }
-
     } catch (e) {
       this.props.onError('Unable to load podcasts');
     }

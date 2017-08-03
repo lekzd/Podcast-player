@@ -6,6 +6,6 @@ export class Series {
         public title: string,
         public description: string,
         public created: Date,
-        public podcasts: Podcast[]
+        public podcasts: Podcast[] = []
     ) { }
 }

@@ -66,7 +66,7 @@ class Player extends React.Component<Props, {}> {
     return (
       <div>
         <strong>{podcast.title}</strong>
-        <Link to={'/author/' + podcast.author.id}>{podcast.author.name}</Link>
+        <Link to={'/authors/' + podcast.author.id}>{podcast.author.name}</Link>
       </div>
     );
   }
