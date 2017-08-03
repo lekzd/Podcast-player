@@ -10,9 +10,11 @@ interface Props {
   playingPodcast: PlayingPodcast;
 }
 
-const mapStateToProps = (state: State) => ({
+const mapStateToProps = (state: State) => {
+  return {
   playingPodcast: state.playingPodcast
-});
+}
+};
 
 const mapDispatchToProps = (dispatch: Function) => ({
   onPause: () => dispatch({ type: PAUSE_PODCAST }),
@@ -34,18 +36,19 @@ class Player extends React.Component<Props, {}> {
     });
   }
 
-  shouldComponentUpdate() {
-    if (this.props.playingPodcast.podcast && this.props.playingPodcast.podcast.url !== this.plyrInstance.source()) {
+  shouldComponentUpdate(newProps: Props) {
+    let state = newProps.playingPodcast;
+    if (state.podcast && this.plyrInstance.source().indexOf(state.podcast.url) === -1) {
       this.plyrInstance.source({
         type: 'audio',
-        title: this.props.playingPodcast.podcast.title,
+        title: state.podcast.title,
         sources: [{
-          src: this.props.playingPodcast.podcast.url,
+          src: state.podcast.url,
           type: 'audio/mp3'
         }]
       });
     }
-    if (this.props.playingPodcast.playState === 'PLAYING') {
+    if (state.playState === 'PLAYING') {
       this.plyrInstance.play();
     } else {
       this.plyrInstance.pause();

@@ -3,3 +3,4 @@ export const API_ERROR = 'API_ERROR';
 export const PLAY_PODCAST = 'PLAY_PODCAST';
 export const RESUME_PODCAST = 'RESUME_PODCAST';
 export const PAUSE_PODCAST = 'PAUSE_PODCAST';
+export const QUEUE_PODCAST = 'QUEUE_PODCAST';

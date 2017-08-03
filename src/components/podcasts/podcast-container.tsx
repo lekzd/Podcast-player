@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Podcast, State } from '../../models';
-import { PODCASTLIST_LOADED, API_ERROR, PLAY_PODCAST } from '../../constants/action-types';
+import { PODCASTLIST_LOADED, API_ERROR, PLAY_PODCAST, QUEUE_PODCAST } from '../../constants/action-types';
 import { podcastAPI } from '../../api';
 import PodcastComponent from './podcast';
 import PodcastSearch from './podcast-search';
@@ -11,6 +11,7 @@ interface Props {
   onError: (errorMessage: String) => void;
   buttonClick: () => void;
   playPodcast: (podcast: Podcast) => void;
+  queuePodcastToPlay: (podcast: Podcast) => void;
   podcastList: Podcast[];
 }
 
@@ -21,7 +22,8 @@ const mapStateToProps = (state: State) => ({
 const mapDispatchToProps = (dispatch: Function) => ({
     updateList: (podcastList: Podcast[]) => dispatch({ type: PODCASTLIST_LOADED, podcastList }),
     onError: (errorMessage: String) => dispatch({ type: API_ERROR, errorMessage }),
-    playPodcast: (podcast: Podcast) => dispatch({type: PLAY_PODCAST, podcast })
+    playPodcast: (podcast: Podcast) => dispatch({type: PLAY_PODCAST, podcast }),
+    queuePodcastToPlay: (podcast: Podcast) => dispatch({type: QUEUE_PODCAST, podcast})
 });
 
 class PodcastContainer extends React.Component<Props, {}> {
@@ -41,6 +43,10 @@ class PodcastContainer extends React.Component<Props, {}> {
     try {
       list = await podcastAPI.getList({ _start: 0, _end: this.amountPerPage });
       this.props.updateList(list);
+      if (list.length > 0) {
+        this.props.queuePodcastToPlay(list[0]);
+      }
+
     } catch (e) {
       this.props.onError('Unable to load podcasts');
     }

@@ -1,5 +1,5 @@
 import { Action, PlayingPodcast } from '../models';
-import { PLAY_PODCAST, RESUME_PODCAST, PAUSE_PODCAST } from '../constants/action-types';
+import { PLAY_PODCAST, RESUME_PODCAST, PAUSE_PODCAST, QUEUE_PODCAST } from '../constants/action-types';
 
 export const playingPodcast = (
         state: PlayingPodcast = {playState: 'PAUSED'},
@@ -12,6 +12,14 @@ export const playingPodcast = (
             return { ...state, playState: 'PAUSED' };
         case RESUME_PODCAST:
             return { ...state, playState: 'PLAYING' };
+        case QUEUE_PODCAST:
+            if (state.playState === 'PLAYING') {
+                return state;
+            }
+            return {
+                playState: 'PAUSED',
+                podcast: action.podcast
+            };
         default:
             return state;
     }
