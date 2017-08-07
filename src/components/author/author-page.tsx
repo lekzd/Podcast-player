@@ -10,9 +10,14 @@ interface Props {
     authorId: number;
   };
   author: Author;
+  match: {
+    params: {
+      id?: string
+    }
+  };
   setCurrentAuthor: (currentAuthor: Author) => void;
   playPodcast: (podcast: Podcast) => void;
-  onError: (errorMessage: String) => void;
+  onError: (errorMessage: string) => void;
 }
 
 const mapStateToProps = (state: State, previousProps: Props) => ({
@@ -23,7 +28,7 @@ const mapStateToProps = (state: State, previousProps: Props) => ({
 const mapDispatchToProps = (dispatch: Function) => ({
   setCurrentAuthor: (currentAuthor: Author) => dispatch({ type: CURRENT_AUTHOR_LOADED, currentAuthor }),
   playPodcast: (podcast: Podcast) => dispatch({ type: PLAY_PODCAST, podcast }),
-  onError: (errorMessage: String) => dispatch({ type: API_ERROR })
+  onError: (errorMessage: string) => dispatch({ type: API_ERROR })
 });
 
 class AuthorPage extends React.Component<Props, {}> {
@@ -37,11 +42,13 @@ class AuthorPage extends React.Component<Props, {}> {
 
   async componentDidMount() {
     let author;
+    if (!this.props.match.params.id) {
+      this.props.onError('Unable to load podcasts');
+    }
     try {
-      author = await authorAPI.read(1); // TODO get from props
+      author = await authorAPI.read(parseInt(this.props.match.params.id!, 10));
       this.props.setCurrentAuthor(author);
     } catch (e) {
-      console.debug(e);
       this.props.onError('Unable to load podcasts');
     }
   }

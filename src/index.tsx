@@ -22,7 +22,7 @@ ReactDOM.render(
         <Route path="/" exact={true} component={PodcastContainer} />
         <Route path="/series" component={SeriesContainer} />
         <Route path="/authors" component={AuthorsContainer}/>
-        <Route path="/authors/:authorId" component={AuthorPage}/>
+        <Route path="/authors/:id" component={AuthorPage}/>
         <Player />
       </div>
     </Router>
