@@ -1,13 +1,18 @@
 import axios from 'axios';
-import { Author } from '../models';
+import { Author, Podcast } from '../models';
 import { AUTHOR_ENDPOINT } from '../constants/endpoints';
 import { fromJson } from '../factories';
 
 class AuthorAPI {
 
     public async read(id: Number): Promise<Author> {
-        return axios.get(AUTHOR_ENDPOINT + '/' + id.toString() + '_embed=podcasts')
+        return axios.get(AUTHOR_ENDPOINT + '/' + id.toString())
             .then(response => fromJson.author(response.data));
+    }
+
+    public async readPodcasts(id: Number): Promise<Podcast[]> {
+        return axios.get(AUTHOR_ENDPOINT + '/' + id.toString() + '/podcasts')
+            .then(response => fromJson.podcastList(response.data));
     }
 
 }

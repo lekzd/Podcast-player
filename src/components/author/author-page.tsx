@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Author, Podcast, State } from '../../models';
-import { CURRENT_AUTHOR_LOADED, API_ERROR, PLAY_PODCAST } from '../../constants/action-types';
+import { CURRENT_AUTHOR_LOADED, API_ERROR, PLAY_PODCAST, PODCASTLIST_LOADED } from '../../constants/action-types';
 import { authorAPI } from '../../api';
 import PodcastComponent from '../podcasts/podcast';
 
@@ -10,23 +10,26 @@ interface Props {
     authorId: number;
   };
   author: Author;
+  podcasts: Podcast[];
   match: {
     params: {
-      id?: string
-    }
+      id?: string;
+    };
   };
   setCurrentAuthor: (currentAuthor: Author) => void;
+  updateList: (podcast: Podcast[]) => void;
   playPodcast: (podcast: Podcast) => void;
   onError: (errorMessage: string) => void;
 }
 
-const mapStateToProps = (state: State, previousProps: Props) => ({
-  ...previousProps,
-  author: state.currentAuthor
+const mapStateToProps = (state: State) => ({
+  author: state.currentAuthor,
+  podcasts: state.podcastList
 });
 
 const mapDispatchToProps = (dispatch: Function) => ({
   setCurrentAuthor: (currentAuthor: Author) => dispatch({ type: CURRENT_AUTHOR_LOADED, currentAuthor }),
+  updateList: (podcasts: Podcast[]) => dispatch({ type: PODCASTLIST_LOADED }, podcasts),
   playPodcast: (podcast: Podcast) => dispatch({ type: PLAY_PODCAST, podcast }),
   onError: (errorMessage: string) => dispatch({ type: API_ERROR })
 });
@@ -42,14 +45,19 @@ class AuthorPage extends React.Component<Props, {}> {
 
   async componentDidMount() {
     let author;
-    if (!this.props.match.params.id) {
+    let podcasts;
+    let authorId = parseInt(this.props.match.params.id!, 10);
+    if (authorId === undefined || isNaN(authorId)) {
       this.props.onError('Unable to load podcasts');
+      return;
     }
     try {
-      author = await authorAPI.read(parseInt(this.props.match.params.id!, 10));
+      author = await authorAPI.read(authorId);
+      podcasts = await authorAPI.readPodcasts(authorId);
       this.props.setCurrentAuthor(author);
+      this.props.updateList(podcasts);
     } catch (e) {
-      this.props.onError('Unable to load podcasts');
+      this.props.onError('Unable to load author details');
     }
   }
 
@@ -58,7 +66,7 @@ class AuthorPage extends React.Component<Props, {}> {
   }
 
   mapPodcasts() {
-    return this.props.author.podcasts.map(podcast =>
+    return this.props.podcasts.map(podcast =>
       (<PodcastComponent podcast={podcast} onPlay={this.playPodcast} key={podcast.id} />)
     );
   }
