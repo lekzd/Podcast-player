@@ -22,14 +22,15 @@ interface Props {
   onError: (errorMessage: string) => void;
 }
 
-const mapStateToProps = (state: State) => ({
+const mapStateToProps = (state: State) => {
+  return {
   author: state.currentAuthor,
   podcasts: state.podcastList
-});
+}; };
 
 const mapDispatchToProps = (dispatch: Function) => ({
   setCurrentAuthor: (currentAuthor: Author) => dispatch({ type: CURRENT_AUTHOR_LOADED, currentAuthor }),
-  updateList: (podcasts: Podcast[]) => dispatch({ type: PODCASTLIST_LOADED }, podcasts),
+  updateList: (podcasts: Podcast[]) => dispatch({ type: PODCASTLIST_LOADED, podcastList: podcasts }),
   playPodcast: (podcast: Podcast) => dispatch({ type: PLAY_PODCAST, podcast }),
   onError: (errorMessage: string) => dispatch({ type: API_ERROR })
 });

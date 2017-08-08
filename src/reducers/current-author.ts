@@ -6,6 +6,6 @@ export const currentAuthor = (state: Author, action: Action = { type: '' }): Aut
         case CURRENT_AUTHOR_LOADED:
             return action.currentAuthor || null;
         default:
-            return null;
+            return state || null;
     }
 };
