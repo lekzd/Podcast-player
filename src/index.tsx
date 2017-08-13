@@ -9,7 +9,7 @@ import PodcastContainer from './components/podcasts/podcast-container';
 import SeriesContainer from './components/series/series-container';
 import AuthorsContainer from './components/author/author-container';
 import AuthorPage from './components/author/author-page';
-import Player from './components/player/player';
+import Player from './components/Player/Player';
 
 import '../node_modules/plyr/dist/plyr.css';
 
